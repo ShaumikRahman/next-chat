@@ -1,0 +1,14 @@
+.navbar {
+    width: 100%;
+    top: 0;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.link {
+    margin: clamp(0.5rem, 1rem + 1vw, 4rem);
+    cursor: pointer;
+    font-size: clamp(1rem, 1rem + 1vw, 3rem);
+}
