@@ -1,12 +1,14 @@
 import styles from '../styles/Index.module.scss'
+import { useRouter } from 'next/router'
 
 export default function Index() {
 
+  const router = useRouter();
+
   function process(e) {
     e.preventDefault();
-
     let str = e.target.name.value.replace(/\W/g, ' ').replace(/\s\s+/g, ' ').trim();
-    console.log(str);
+    router.push(`/chat?name=${str}`);
   }
 
   return (
