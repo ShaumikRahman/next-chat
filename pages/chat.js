@@ -1,9 +1,10 @@
 import styles from '../styles/Chat.module.scss'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 
 export default function Chat() {
+  const [messages, setMessages] = useState([]);
   const router = useRouter();
   const name = router.query
 
@@ -13,9 +14,23 @@ export default function Chat() {
     });
   });
 
+  function processMessage(e) {
+    e.preventDefault();
+
+    const message = e.target.message.value.trim();
+
+    setMessages([...messages, message]);
+  }
+
   return (
     <div className="container">
-      <h1>Test</h1>
+      {messages.map((message, index) => {
+        return <p key={index}>{message}</p>
+      })}
+      <form onSubmit={e => processMessage(e)}>
+        <input type="text" name="message" id="message" />
+        <button type="submit">Send</button>
+      </form>
     </div>
   )
 }
