@@ -10,7 +10,7 @@ const io = socketio(server);
 io.on('connection', socket => {
     console.log(`Client with ID of ${socket.id} connected!`)
 
-    socket.emit('message', 'test message');
+    socket.emit('welcome', 'Welcome to the chat room');
 });
 
 
