@@ -8,13 +8,14 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', socket => {
-    console.log(`Client with ID of ${socket.id} connected!`)
+    console.log(`Client with ID of ${socket.id} connected with name of ${socket.handshake.query.name}`)
 
-    socket.emit('welcome', 'Welcome to the chat room');
+    socket.on('message', message => {
+        console.log('message recieved');
+    });
 });
-
 
 
 server.listen(PORT, () => {
     console.log(`Server running on ${PORT}`);
-});
+}); 

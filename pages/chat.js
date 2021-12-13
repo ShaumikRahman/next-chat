@@ -8,14 +8,25 @@ export default function Chat() {
   const input = useRef();
   const router = useRouter();
   const name = router.query.name;
+  let socket;
 
-  const socket = io("http://localhost:8080", {
-      transports: ["websocket"],
-    });
+  useEffect(() => {
+    if (!name) {
+      router.push("/");
+    }
 
-  socket.on('welcome', message => {
-    newMessage(message);
-  });
+    socket = io("http://localhost:8080", {
+        transports: ["websocket"],
+        query: {
+          name,
+        },
+      });
+      
+  }, []);
+
+  if (socket) {
+    console.log('valid');
+  }
 
   function newMessage(newMessage) {
     setMessages([...messages, newMessage]);
