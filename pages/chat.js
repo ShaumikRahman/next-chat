@@ -8,25 +8,14 @@ export default function Chat() {
   const input = useRef();
   const router = useRouter();
   const name = router.query.name;
-  let socket;
 
-  useEffect(() => {
-    if (!name) {
-      router.push("/");
-    }
+  const socket = io("http://localhost:8080", {
+    transports: ["websocket"],
+  });
 
-    socket = io("http://localhost:8080", {
-        transports: ["websocket"],
-        query: {
-          name,
-        },
-      });
-      
-  }, []);
-
-  if (socket) {
-    console.log('valid');
-  }
+  socket.on("message", message => {
+    console.log(message);
+  });
 
   function newMessage(newMessage) {
     setMessages([...messages, newMessage]);
@@ -37,7 +26,14 @@ export default function Chat() {
 
     const message = e.target.message.value.trim();
 
-    setMessages([...messages, message]);
+    if (message) {
+      socket.emit("message", message);
+
+      newMessage(message);
+    } else {
+      console.log(socket, "failed");
+    }
+
     e.target.reset();
     input.current.focus();
   }

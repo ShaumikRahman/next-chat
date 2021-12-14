@@ -8,12 +8,15 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', socket => {
-    console.log(`Client with ID of ${socket.id} connected with name of ${socket.handshake.query.name}`)
+   // console.log(socket.id);
 
     socket.on('message', message => {
-        console.log('message recieved');
+        console.log(`${message} from ${socket.id}`);
+        io.emit('message', message);
     });
 });
+
+
 
 
 server.listen(PORT, () => {
