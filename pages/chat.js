@@ -1,20 +1,17 @@
 import styles from "../styles/Chat.module.scss";
-import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import io from "socket.io-client";
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const input = useRef();
-  const router = useRouter();
-  const name = router.query.name;
 
   const socket = io("http://localhost:8080", {
     transports: ["websocket"],
   });
 
-  socket.on("message", message => {
-    console.log(message);
+  socket.on("message", (message) => {
+    newMessage(message);
   });
 
   function newMessage(newMessage) {
@@ -28,8 +25,6 @@ export default function Chat() {
 
     if (message) {
       socket.emit("message", message);
-
-      newMessage(message);
     } else {
       console.log(socket, "failed");
     }
@@ -39,8 +34,7 @@ export default function Chat() {
   }
 
   return (
-    <div className="container">
-      {name}
+    <div className={styles.container}>
       <div className={styles.messages}>
         {messages.map((message, index) => {
           return (
@@ -52,7 +46,13 @@ export default function Chat() {
       </div>
       <div className={styles.form}>
         <form onSubmit={(e) => processMessage(e)}>
-          <input type="text" name="message" id="message" ref={input} />
+          <input
+            type="text"
+            name="message"
+            id="message"
+            placeholder="Type message..."
+            ref={input}
+          />
           <button type="submit">Send</button>
         </form>
       </div>

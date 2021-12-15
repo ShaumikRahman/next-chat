@@ -8,11 +8,10 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', socket => {
-   // console.log(socket.id);
 
     socket.on('message', message => {
         console.log(`${message} from ${socket.id}`);
-        io.emit('message', message);
+        socket.emit('message', message);
     });
 });
 
