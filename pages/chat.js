@@ -1,5 +1,5 @@
 import styles from "../styles/Chat.module.scss";
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 
 export default function Chat() {
@@ -17,6 +17,10 @@ export default function Chat() {
   function newMessage(newMessage) {
     setMessages([...messages, newMessage]);
   }
+
+  useEffect(() => {
+    newMessage('Welcome');
+  }, []);
 
   function processMessage(e) {
     e.preventDefault();
