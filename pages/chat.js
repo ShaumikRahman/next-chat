@@ -57,7 +57,7 @@ export default function Chat() {
             placeholder="Type message..."
             ref={input}
           />
-          <button type="submit">></button>
+          <button type="submit">{'>'}</button>
         </form>
       </div>
     </div>
