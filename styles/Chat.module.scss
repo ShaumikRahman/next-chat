@@ -38,10 +38,15 @@
 
   input {
     font-size: clamp(1rem, 1.5vw, 4rem);
+    border-radius: 12px;
+    outline: none;
+    background-color: #e7e7e7;
   }
 
   button {
     font-size: clamp(1rem, 1.5vw, 4rem);
+    background-color: #e7e7e7;
+    border-radius: 12px;
 
   }
 }
